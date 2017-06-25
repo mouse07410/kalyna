@@ -1,5 +1,35 @@
+#!/usr/bin/env make
 
-all: kalyna
+CC = gcc
+RM = rm -f
 
-kalyna: 
-	gcc kalyna.c main.c tables.c -o kalyna
+CFLAGS += -Wall -Wextra
+
+SRCS = kalyna.c main.c tables.c
+OBJS = kalyna.o main.o tables.o
+TARGET = kalyna
+
+
+default: all
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS)
+
+test:  $(TARGET)
+	./$(TARGET)
+
+clean:
+	$(RM) *.o $(TARGET)
+
+tables.c: tables.h kalyna.h
+
+main.c:   kalyna.h transformations.h
+
+kalyna.c:  transformations.h tables.h
+
+.c.o:
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+#

@@ -11,7 +11,7 @@
 #include "kalyna.h"
 #include "transformations.h"
 
-void print (int data_size, uint64_t data []);
+void print (size_t data_size, uint64_t data []);
 
 int main(int argc, char** argv) {
 
@@ -102,6 +102,10 @@ int main(int argc, char** argv) {
     kalyna_t* ctx48_d = KalynaInit(256, 512);
     kalyna_t* ctx88_d = KalynaInit(512, 512);
 
+    if (argc > 1) { /* to suppress "Unused parameters" compiler warnings */
+      printf("Got %d parameters: argv[0]=%s argv[1]=%s\n", argc, argv[0], argv[1]);
+    } 	
+    
     // kalyna 22 enc
     KalynaKeyExpand(key22_e, ctx22_e);
 
@@ -326,11 +330,10 @@ int main(int argc, char** argv) {
 }
 
 
-void print (int data_size, uint64_t data [])
+void print (size_t data_size, uint64_t data [])
 {
-    int i;
     uint8_t * tmp = (uint8_t *) data;
-    for (i = 0; i < data_size * 8; i ++)
+    for (size_t i = 0; i < data_size * 8; i ++)
     {
         if (! (i % 16)) printf ("    ");
         printf ("%02X", (unsigned int) tmp [i]);
