@@ -1,6 +1,6 @@
 #!/usr/bin/env make
 
-CC = clang
+CC ?= clang
 RM = rm -f
 
 CFLAGS += -Wall -Wextra
